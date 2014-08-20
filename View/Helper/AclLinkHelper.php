@@ -5,9 +5,9 @@
  * Based on Joel Stein AclLinkHelper
  * http://bakery.cakephp.org/articles/joel.stein/2010/06/26/acllinkhelper
  *
- * @author 		Shahril Abdullah - shahonseven
- * @link 		
- * @package 	Helper
+ * @author      Shahril Abdullah - shahonseven
+ * @link        
+ * @package     Helper
  * @license     MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -16,61 +16,61 @@ App::uses('AclComponent', 'Controller/Component');
 
 class AclLinkHelper extends FormHelper {
 
-	public $userModel = 'User';
+    public $userModel = 'User';
 
-	public $primaryKey = 'id';
+    public $primaryKey = 'id';
 
-	public function __construct(View $View, $settings = array()) {
-		parent::__construct($View, $settings);
+    public function __construct(View $View, $settings = array()) {
+        parent::__construct($View, $settings);
 
-		if (is_array($settings) && isset($settings['userModel'])) {
-			$this->userModel = $settings['userModel'];
-		}
+        if (is_array($settings) && isset($settings['userModel'])) {
+            $this->userModel = $settings['userModel'];
+        }
 
-		if (is_array($settings) && isset($settings['primaryKey'])) {
-			$this->primaryKey = $settings['primaryKey'];
-		}
-	}
+        if (is_array($settings) && isset($settings['primaryKey'])) {
+            $this->primaryKey = $settings['primaryKey'];
+        }
+    }
 
-	protected function _aclCheck($url) {
-		$plugin = '';
-		if (isset($url['plugin'])) {
-			$plugin = Inflector::camelize($url['plugin']) . '/';
-		}
+    protected function _aclCheck($url) {
+        $plugin = '';
+        if (isset($url['plugin'])) {
+            $plugin = Inflector::camelize($url['plugin']) . '/';
+        }
 
-		$controller = '';
-		if (isset($url['controller'])) {
-			$controller = Inflector::camelize($url['controller']) . '/';
-		}
+        $controller = '';
+        if (isset($url['controller'])) {
+            $controller = Inflector::camelize($url['controller']) . '/';
+        }
 
-		$action = 'index';
-		if (isset($url['action'])) {
-			$action = $url['action'];
-		}
+        $action = 'index';
+        if (isset($url['action'])) {
+            $action = $url['action'];
+        }
 
-		$collection = new ComponentCollection();
+        $collection = new ComponentCollection();
         $acl = new AclComponent($collection);
         $aro = array(
-        	$this->userModel => array(
-        		$this->primaryKey => AuthComponent::user($this->primaryKey)
-        	)
+            $this->userModel => array(
+                $this->primaryKey => AuthComponent::user($this->primaryKey)
+            )
         );
         $aco = $plugin.$controller.$action;
         return $acl->check($aro, $aco);
-	}
+    }
 
-	public function link($title, $url = null, $options = array(), $confirmMessage = null) { 
-		if ($this->_aclCheck($url)) {
-			return $this->Html->link($title, $url, $options, $confirmMessage);
-		}
-		return '';
-	}
+    public function link($title, $url = null, $options = array(), $confirmMessage = null) { 
+        if ($this->_aclCheck($url)) {
+            return $this->Html->link($title, $url, $options, $confirmMessage);
+        }
+        return '';
+    }
 
-	public function postLink($title, $url = null, $options = array(), $confirmMessage = false) {
-		if ($this->_aclCheck($url)) {
-			return parent::postLink($title, $url, $options, $confirmMessage);
-		}
-		return '';
-	}
-	
+    public function postLink($title, $url = null, $options = array(), $confirmMessage = false) {
+        if ($this->_aclCheck($url)) {
+            return parent::postLink($title, $url, $options, $confirmMessage);
+        }
+        return '';
+    }
+    
 }
