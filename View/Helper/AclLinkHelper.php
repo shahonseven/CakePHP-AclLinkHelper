@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP ACL Link Helper
  *
@@ -6,18 +7,16 @@
  * http://bakery.cakephp.org/articles/joel.stein/2010/06/26/acllinkhelper
  *
  * @author      Shahril Abdullah - shahonseven
- * @link        
+ * @link        https://github.com/kolorafa/CakePHP-Acl-Link-Helper
  * @package     Helper
  * @license     MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 App::uses('FormHelper', 'View/Helper');
 App::uses('AclComponent', 'Controller/Component');
 
 class AclLinkHelper extends FormHelper {
 
     public $userModel = 'User';
-
     public $primaryKey = 'id';
 
     public function __construct(View $View, $settings = array()) {
@@ -32,7 +31,11 @@ class AclLinkHelper extends FormHelper {
         }
     }
 
-    protected function _aclCheck($url) {
+    protected function _aclCheck($url, $appendCurrent = true) {
+        if ($appendCurrent) {
+            $url = array_merge($this->request->params, $url);
+        }
+
         $plugin = '';
         if (isset($url['plugin'])) {
             $plugin = Inflector::camelize($url['plugin']) . '/';
@@ -55,11 +58,11 @@ class AclLinkHelper extends FormHelper {
                 $this->primaryKey => AuthComponent::user($this->primaryKey)
             )
         );
-        $aco = $plugin.$controller.$action;
+        $aco = $plugin . $controller . $action;
         return $acl->check($aro, $aco);
     }
 
-    public function link($title, $url = null, $options = array(), $confirmMessage = null) { 
+    public function link($title, $url = null, $options = array(), $confirmMessage = null) {
         if ($this->_aclCheck($url)) {
             return $this->Html->link($title, $url, $options, $confirmMessage);
         }
@@ -72,5 +75,13 @@ class AclLinkHelper extends FormHelper {
         }
         return '';
     }
-    
+
+    /*
+     * check if you have access by array url
+     */
+
+    public function aclCheck($url, $appendCurrent = true) {
+        $this->_aclCheck($url, $appendCurrent);
+    }
+
 }
