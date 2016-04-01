@@ -7,7 +7,7 @@
  * http://bakery.cakephp.org/articles/joel.stein/2010/06/26/acllinkhelper
  *
  * @author      Shahril Abdullah - shahonseven
- * @link        https://github.com/kolorafa/CakePHP-Acl-Link-Helper
+ * @link        https://github.com/shahonseven/CakePHP-Acl-Link-Helper
  * @package     Helper
  * @license     MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
