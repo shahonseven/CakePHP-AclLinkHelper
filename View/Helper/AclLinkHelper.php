@@ -81,7 +81,7 @@ class AclLinkHelper extends FormHelper {
      */
 
     public function aclCheck($url, $appendCurrent = true) {
-        $this->_aclCheck($url, $appendCurrent);
+        return $this->_aclCheck($url, $appendCurrent);
     }
 
 }
