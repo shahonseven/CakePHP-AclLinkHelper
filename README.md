@@ -1,5 +1,10 @@
-CakePHP-Acl-Link-Helper
+CakePHP AclLinkHelper
 =======================
+
+Installation
+------------
+For CakePHP 3.x please use [3.x branch](https://github.com/shahonseven/CakePHP-AclLinkHelper/tree/3.x)
+
 
 Loading the helper
 ------------
