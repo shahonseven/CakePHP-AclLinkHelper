@@ -1,15 +1,17 @@
-CakePHP-Acl-Link-Helper
+CakePHP 3.x AclHelper
 =======================
 
 Loading the helper
 ------------
+in src/View/AppView.php
 ```php
 <?php
-	class AppController extends Contoller{
-		public $helpers = array('AclLink' => array
-		  'userModel' => 'Customer', //overide default userModel "User"
-		  'primaryKey' => 'customer_id' //overide default primaryKey "id"
-		);
+	class AppView extends View
+	{
+		public function initialize()
+		{
+			$this->loadHelper('Acl', ['userModel' => 'Users']);
+		}
 	}
 ?>
 ```
@@ -18,10 +20,10 @@ Usage
 ------------
 Create normal link
 ```php
-<?php echo $this->AclLink->link($title, $url, $options, $confirmMsg)); ?>
+<?= $this->Acl->link($title, $url, $options)); ?>
 ```
 
 Create post link
 ```php
-<?php echo $this->AclLink->postLink($title, $url, $options, $confirmMsg)); ?>
+<?= $this->Acl->postLink($title, $url, $options)); ?>
 ```
