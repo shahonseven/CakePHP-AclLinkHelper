@@ -10,7 +10,9 @@ in src/View/AppView.php
 	{
 		public function initialize()
 		{
-			$this->loadHelper('Acl', ['userModel' => 'Users']);
+			$this->loadHelper('Acl', [
+				'userModel' => 'Users' //Optional
+			]);
 		}
 	}
 ?>
