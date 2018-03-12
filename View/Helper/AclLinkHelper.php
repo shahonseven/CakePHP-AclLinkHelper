@@ -35,6 +35,11 @@ class AclLinkHelper extends FormHelper {
         if ($appendCurrent) {
             $url = array_merge($this->request->params, $url);
         }
+        
+        $prefix = '';
+        if (isset($url['prefix'])) {
+            $prefix = Inflector::camelize($url['prefix']) . '/';
+        }
 
         $plugin = '';
         if (isset($url['plugin'])) {
@@ -58,7 +63,7 @@ class AclLinkHelper extends FormHelper {
                 $this->primaryKey => AuthComponent::user($this->primaryKey)
             )
         );
-        $aco = $plugin . $controller . $action;
+        $aco = $prefix . $plugin . $controller . $action;
         return $acl->check($aro, $aco);
     }
 
